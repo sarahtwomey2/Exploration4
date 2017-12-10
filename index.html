@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Exploration 4</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <!--<script src="Vue.js"></script>-->
+        
+        <style>
+            .w {
+                text-align: center;
+                font-size: 30px;
+                background-color:  aquamarine;
+            }
+            
+            .o {
+                margin: 10px;
+                background-color: aliceblue;
+            }
+        </style>
+        
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.2/css/bulma.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+        
+    </head>
+    
+    <body>
+        <br>
+        <div id="app" class="w">
+          {{ message }}
+        </div>
+        
+        <br>
+        <div id="app-2" class="o">
+          <span v-bind:title="message">
+            Hover your mouse over me for a few seconds
+            to see my dynamically bound title!
+          </span>
+        </div>
+        
+        <div id="app-3" class="o">
+            <span v-if="seen" app3.seen = false>Now you see me </span>
+        </div>
+        
+        <div id="app-4" class="o">
+          <p>For this exploration I...</p>
+          <ol>
+            <li v-for="todo in todos">
+              {{ todo.text }}
+            </li>
+          </ol>
+        </div>
+        
+        <div id="app-5" class="o">
+          <p>{{ message }}</p>
+          <button v-on:click="reverseMessage">Reverse Message</button>
+        </div>
+        
+        <div id="app-6" class="o">
+          <p>{{ message }}</p>
+          <input v-model="message" style="width:600px;">
+        </div>
+        
+        <div id="app-7" class="o">
+          <ol>
+            <!--
+              Now we provide each todo-item with the todo object
+              it's representing, so that its content can be dynamic.
+              We also need to provide each component with a "key",
+              which will be explained later.
+            -->
+            <todo-item
+              v-for="item in groceryList"
+              v-bind:todo="item"
+              v-bind:key="item.id">
+            </todo-item>
+          </ol>
+        </div>
+        
+        
+        
+        <script>
+            var app = new Vue({
+              el: '#app',
+              data: {
+                message: 'Welcome to my fourth exploration!'
+              }
+            })
+            
+            var app2 = new Vue({
+              el: '#app-2',
+              data: {
+                message: 'You loaded this page on ' + new Date().toLocaleString()
+              }
+            })
+            
+            var app3 = new Vue({
+              el: '#app-3',
+              data: {
+                seen: true
+              }
+            })
+            
+            var app4 = new Vue({
+              el: '#app-4',
+              data: {
+                todos: [
+                  { text: 'Searched for a job on Glassdoor' },
+                  { text: 'Learned Vue' },
+                  { text: 'Built something awesome' }
+                ]
+              }
+            })
+            
+            var app5 = new Vue({
+              el: '#app-5',
+              data: {
+                message: 'You can use Vue.js to reverse a string'
+              },
+              methods: {
+                reverseMessage: function () {
+                  this.message = this.message.split('').reverse().join('')
+                }
+              }
+            })
+            
+            var app6 = new Vue({
+              el: '#app-6',
+              data: {
+                message: 'You can dynamically change this text by typing in the text bar below'
+              }
+            })
+            
+            Vue.component('todo-item', {
+              props: ['todo'],
+              template: '<li>{{ todo.text }}</li>'
+            })
+
+            var app7 = new Vue({
+              el: '#app-7',
+              data: {
+                groceryList: [
+                  { id: 0, text: 'Vue is a framework for building user interfaces' },
+                  { id: 1, text: 'It uses the view layer only to update the scene' },
+                  { id: 2, text: 'Perfect for single-page applications' }
+                ]
+              }
+            })
+        </script>
+    </body>
